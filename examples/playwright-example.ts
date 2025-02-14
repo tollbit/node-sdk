@@ -8,19 +8,19 @@ dotenv.config();
 async function main() {
   const TEST_URL = "https://www.whatismybrowser.com";
 
-  // Initialize Tollbit with your credentials and known protected sites
-  const tollbit = new PlaywrightTollbit({
-    secretKey: process.env.TOLLBIT_SECRET_KEY || "your-secret-key",
-    userAgent: process.env.TOLLBIT_USER_AGENT || "your-registered-user-agent",
-    debug: true,
-    forceHeaders: true, // Always add Tollbit headers
-  });
-
-  if (!process.env.TOLLBIT_SECRET_KEY || !process.env.TOLLBIT_USER_AGENT) {
+  if (!process.env.TOLLBIT_API_KEY || !process.env.TOLLBIT_USER_AGENT) {
     throw new Error(
       "Missing required environment variables. Please check your .env file"
     );
   }
+
+  // Initialize Tollbit with your credentials and known protected sites
+  const tollbit = new PlaywrightTollbit({
+    apiKey: process.env.TOLLBIT_API_KEY || "your-api-key",
+    userAgent: process.env.TOLLBIT_USER_AGENT || "your-registered-user-agent",
+    debug: true,
+    forceHeaders: true, // Always add Tollbit headers
+  });
 
   // Launch browser and create context
   const browser = await chromium.launch({ headless: false });

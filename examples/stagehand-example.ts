@@ -17,7 +17,7 @@ async function main() {
 
   // Initialize Tollbit with your configuration
   const tollbit = new StagehandTollbit({
-    secretKey: process.env.TOLLBIT_SECRET_KEY!,
+    apiKey: process.env.TOLLBIT_API_KEY!,
     userAgent: "TestBot/1.0",
     debug: true, // Enable debug logging
     forceHeaders: true, // Use redirect-based behavior
