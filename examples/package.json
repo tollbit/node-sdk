@@ -1,0 +1,17 @@
+{
+  "name": "tollbit-examples",
+  "private": true,
+  "scripts": {
+    "playwright": "tsx playwright-example.ts",
+    "redirect": "tsx redirect.ts"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.50.1",
+    "@tollbit/playwright": "workspace:*",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "tsx": "^4.7.1",
+    "typescript": "^5.3.3"
+  }
+}

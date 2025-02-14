@@ -1,0 +1,14 @@
+{
+  "name": "tollbit",
+  "private": true,
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev": "pnpm -r dev",
+    "clean": "rm -rf packages/*/dist"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.19",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3"
+  }
+}
