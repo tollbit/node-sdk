@@ -10,6 +10,7 @@ async function main() {
   const stagehand = new Stagehand({
     env: "LOCAL",
     headless: false /* Run browser in headless mode */,
+    modelName: "gpt-4o",
   });
 
   await stagehand.init();
@@ -35,6 +36,8 @@ async function main() {
   await page.goto("http://localhost:3001/");
 
   await page.act("click on the glasses");
+
+  await page.act("click add to cart");
 
   // Close the browser
   await stagehand.close();
