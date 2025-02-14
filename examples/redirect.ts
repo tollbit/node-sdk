@@ -10,7 +10,7 @@ async function main() {
 
   // Initialize Tollbit with your credentials and known protected sites
   const tollbit = new PlaywrightTollbit({
-    secretKey: process.env.TOLLBIT_SECRET_KEY || "your-secret-key",
+    apiKey: process.env.TOLLBIT_API_KEY || "your-api-key",
     userAgent: process.env.TOLLBIT_USER_AGENT || "your-registered-user-agent",
     debug: true,
     forceHeaders: true,

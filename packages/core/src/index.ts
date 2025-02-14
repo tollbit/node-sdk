@@ -1,9 +1,10 @@
 // src/index.ts
-import { importPKCS8, SignJWT } from "jose";
 
 export interface TollbitConfig {
-  /** Secret key obtained from tollbit.com */
-  secretKey: string;
+  /** Optional override for the host */
+  tollbitHost?: string;
+  /** API key obtained from tollbit.com */
+  apiKey: string;
   /** Registered user agent string */
   userAgent: string;
   /** Enable debug logging */
@@ -33,13 +34,9 @@ export interface RedirectResult {
 }
 
 export class Tollbit {
-  private key: Awaited<ReturnType<typeof importPKCS8>> | null = null;
   private protectedSites: Set<string>;
 
   constructor(protected readonly config: TollbitConfig) {
-    if (!config.secretKey) {
-      throw new TollbitError("Secret key is required", "MISSING_SECRET_KEY");
-    }
     if (!config.userAgent) {
       throw new TollbitError("User agent is required", "MISSING_USER_AGENT");
     }
@@ -49,45 +46,40 @@ export class Tollbit {
     );
   }
 
-  protected async init() {
-    if (!this.key) {
-      try {
-        this.key = await importPKCS8(this.config.secretKey, "RS256");
-      } catch (error) {
-        throw new TollbitError(
-          "Failed to import secret key. Ensure it is in valid PKCS8 format.",
-          "INVALID_SECRET_KEY"
-        );
-      }
-    }
-  }
-
   protected isProtectedUrl(url: URL): boolean {
     return this.protectedSites.has(url.origin);
   }
 
   protected async generateToken(targetUrl: URL): Promise<string> {
-    await this.init();
-    if (!this.key) {
-      throw new TollbitError("Failed to initialize key", "KEY_INIT_FAILED");
+    if (!this.config.apiKey) {
+      throw new TollbitError("API key is required", "KEY_INIT_FAILED");
     }
 
     try {
-      const jwt = await new SignJWT({
-        userAgent: this.config.userAgent,
-      })
-        .setProtectedHeader({ alg: "RS256" })
-        .setIssuedAt()
-        .setIssuer("TollbitSDK")
-        .setAudience(targetUrl.origin)
-        .setExpirationTime("5m")
-        .sign(this.key);
+      const resp = await fetch(
+        `https://${
+          this.config.tollbitHost || "edge.tollbit.com"
+        }/.tollbit/auth/token`,
+        {
+          body: JSON.stringify({
+            apiKey: this.config.apiKey,
+            userAgent: this.config.userAgent,
+            site: targetUrl.host,
+          }),
+          method: "POST",
+        }
+      );
 
-      if (this.config.debug) {
-        console.log(`Generated token for ${targetUrl.origin}`);
+      if (resp.status !== 200) {
+        throw new TollbitError(
+          "Failed to generate token for site",
+          "TOKEN_FETCH"
+        );
       }
 
-      return jwt;
+      const json = await resp.json();
+
+      return json.token;
     } catch (error) {
       throw new TollbitError(
         "Failed to generate token",
