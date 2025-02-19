@@ -128,7 +128,7 @@ export class Tollbit {
     return {
       ...existingHeaders,
       "user-agent": this.config.userAgent,
-      "x-tollbit-token": token,
+      Authorization: `Bearer ${token}`,
     };
   }
 }
