@@ -2,13 +2,18 @@
   "name": "tollbit",
   "private": true,
   "scripts": {
-    "build": "pnpm -r build",
-    "dev": "pnpm -r dev",
-    "clean": "rm -rf packages/*/dist"
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "check-types": "turbo run check-types"
   },
   "devDependencies": {
     "@types/node": "^20.11.19",
+    "prettier": "^3.5.1",
     "tsup": "^8.0.1",
-    "typescript": "^5.3.3"
-  }
+    "turbo": "^2.4.2",
+    "typescript": "^5.7.3"
+  },
+  "packageManager": "pnpm@10.1.0"
 }

@@ -1,0 +1,14 @@
+{
+  "mode": "pre",
+  "tag": "alpha",
+  "initialVersions": {
+    "@tollbit/client": "0.1.0",
+    "@tollbit/eslint-config": "0.0.0",
+    "@tollbit/playwright": "0.1.0",
+    "@tollbit/stagehand": "0.1.0",
+    "@tollbit/typescript-config": "0.0.0"
+  },
+  "changesets": [
+    "whole-cities-study"
+  ]
+}

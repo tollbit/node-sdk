@@ -18,6 +18,7 @@ async function main() {
   const tollbit = new PlaywrightTollbit({
     apiKey: process.env.TOLLBIT_API_KEY || "your-api-key",
     userAgent: process.env.TOLLBIT_USER_AGENT || "your-registered-user-agent",
+    tollbitHost: "edge.preproduction.tollbit.com",
     debug: true,
     forceHeaders: true, // Always add Tollbit headers
   });

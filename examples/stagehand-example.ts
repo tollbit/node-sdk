@@ -17,6 +17,7 @@ async function main() {
 
   // Initialize Tollbit with your configuration
   const tollbit = new StagehandTollbit({
+    tollbitHost: "edge.preproduction.tollbit.com",
     apiKey: process.env.TOLLBIT_API_KEY!,
     userAgent: "TestBot/1.0",
     debug: true, // Enable debug logging
@@ -33,7 +34,7 @@ async function main() {
   const page = stagehand.page;
 
   // Navigate to your protected page
-  await page.goto("http://localhost:3001/");
+  await page.goto("https://tollbit.0b1000101.com/");
 
   await page.act("click on the glasses");
 

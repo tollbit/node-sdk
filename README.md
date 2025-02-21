@@ -14,7 +14,7 @@ The Tollbit SDK enables developers to seamlessly run browser automation with Tol
 
 This monorepo contains the following packages:
 
-- `@tollbit/core` - Core functionality and types for Tollbit integrations
+- `@tollbit/client` - Core functionality and types for Tollbit integrations
 - `@tollbit/playwright` - [Playwright](https://playwright.dev) integration
 - `@tollbit/stagehand` - [Stagehand](https://browserbase.io) integration
 

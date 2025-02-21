@@ -1,4 +1,4 @@
-import { Tollbit, TollbitConfig } from "@tollbit/core";
+import { Tollbit, TollbitConfig } from "@tollbit/client";
 import type { Page, BrowserContext } from "@browserbasehq/stagehand";
 
 export class StagehandTollbit extends Tollbit {
@@ -7,9 +7,9 @@ export class StagehandTollbit extends Tollbit {
   }
 
   async attachToContext(context: BrowserContext): Promise<void> {
-    if (this.config.debug) {
-      console.log("Attaching Tollbit to Stagehand context");
-    }
+    // if (this.config.debug) {
+    console.log("Attaching Tollbit to Stagehand context");
+    // }
 
     // If forceHeaders is enabled, add headers to all requests
     if (this.config.forceHeaders) {

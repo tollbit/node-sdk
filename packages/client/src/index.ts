@@ -71,6 +71,7 @@ export class Tollbit {
       );
 
       if (resp.status !== 200) {
+        console.error(targetUrl, resp.status);
         throw new TollbitError(
           "Failed to generate token for site",
           "TOKEN_FETCH"
@@ -81,6 +82,7 @@ export class Tollbit {
 
       return json.token;
     } catch (error) {
+      console.error(error);
       throw new TollbitError(
         "Failed to generate token",
         "TOKEN_GENERATION_FAILED"
@@ -125,6 +127,7 @@ export class Tollbit {
     }
 
     const token = await this.generateToken(url);
+    console.log("generated token ", token);
     return {
       ...existingHeaders,
       "user-agent": this.config.userAgent,

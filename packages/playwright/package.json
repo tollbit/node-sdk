@@ -1,15 +1,26 @@
 {
   "name": "@tollbit/playwright",
-  "version": "0.1.0",
+  "version": "1.0.0-alpha.0",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts",
-    "dev": "tsup src/index.ts --format cjs,esm --dts --watch"
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "lint": "eslint . --max-warnings 0"
   },
   "dependencies": {
-    "@tollbit/core": "workspace:*",
+    "@tollbit/client": "workspace:*"
+  },
+  "devDependencies": {
+    "@tollbit/eslint-config": "workspace:*",
+    "@tollbit/typescript-config": "workspace:*",
+    "eslint": "^9.20.0"
+  },
+  "peerDependencies": {
     "@playwright/test": "^1.50.1"
   }
 }

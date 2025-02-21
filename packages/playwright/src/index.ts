@@ -1,4 +1,4 @@
-import { Tollbit, TollbitConfig } from "@tollbit/core";
+import { Tollbit, TollbitConfig } from "@tollbit/client";
 import type { Page, BrowserContext } from "@playwright/test";
 
 export class PlaywrightTollbit extends Tollbit {
