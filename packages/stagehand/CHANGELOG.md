@@ -1,5 +1,13 @@
 # @tollbit/stagehand
 
+## 1.0.0-alpha.2
+
+### Patch Changes
+
+- 20dac81: Update docs + expose some functions on the proxy client
+- Updated dependencies [20dac81]
+  - @tollbit/client@1.0.0-alpha.2
+
 ## 1.0.0-alpha.1
 
 ### Minor Changes
