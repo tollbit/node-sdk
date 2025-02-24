@@ -16,6 +16,9 @@
       "cache": false,
       "persistent": true,
       "dependsOn": ["^dev"]
+    },
+    "test": {
+      "dependsOn": ["^test"]
     }
   }
 }

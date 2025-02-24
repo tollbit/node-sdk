@@ -1,6 +1,6 @@
 // src/index.ts
 
-export interface TollbitConfig {
+export interface ProxyClientConfig {
   /** Optional override for the host */
   tollbitHost?: string;
   /** API key obtained from tollbit.com */
@@ -16,7 +16,11 @@ export interface TollbitConfig {
 }
 
 export class TollbitError extends Error {
-  constructor(message: string, public code: string, public status?: number) {
+  constructor(
+    message: string,
+    public code: string,
+    public status?: number
+  ) {
     super(message);
     this.name = "TollbitError";
   }
@@ -33,14 +37,39 @@ export interface RedirectResult {
   redirectUrl?: URL;
 }
 
-export class Tollbit {
-  private protectedSites: Set<string>;
+export type CheckResponseResult =
+  | {
+      action: "redirect";
+      isTollbitSite: true;
+      to: URL;
+    }
+  | {
+      action: "token_required";
+      isTollbitSite: true;
+      to?: never;
+    }
+  | {
+      action: "none";
+      isTollbitSite?: never;
+      to?: never;
+    };
 
-  constructor(protected readonly config: TollbitConfig) {
+// export type ResponseHand
+
+export class ProxyClient {
+  private protectedSites: Set<string>;
+  private readonly config: ProxyClientConfig;
+
+  static create(config: ProxyClientConfig): ProxyClient {
+    return new ProxyClient(config);
+  }
+
+  protected constructor(config: ProxyClientConfig) {
     if (!config.userAgent) {
       throw new TollbitError("User agent is required", "MISSING_USER_AGENT");
     }
 
+    this.config = config;
     this.protectedSites = new Set(
       (config.knownSites || []).map((url) => url.origin)
     );
@@ -90,32 +119,51 @@ export class Tollbit {
     }
   }
 
-  public async handleResponse(
+  public async checkResponse(
     response: TollbitResponse,
     targetUrl: string
-  ): Promise<RedirectResult> {
-    // Not a redirect status code
+  ): Promise<CheckResponseResult> {
+    // we make a request to a site, and get redirected to the tollbit subdomain
+
+    // we make a request to a site, and get redirected, but not a tollbit redirect
+
+    // we make a request to a tollbit site, but get a 402 for not having a token
+
+    console.log("checking response for %o %s", response, targetUrl);
+    if (
+      /^402$/.test(`${response.status}`) /*&&
+      response.headers["x-tollbit-token-required"]*/
+    ) {
+      console.log("received 402 from %s", targetUrl);
+      // this is a tollbit subdomain, but we need a token
+      this.registerSite(new URL(targetUrl));
+      return { action: "token_required", isTollbitSite: true };
+    }
+
     if (!/^3\d\d$/.test(`${response.status}`)) {
-      return { shouldRedirect: false };
+      // Not a redirect status code, so we can just return the response
+      return { action: "none" };
     }
 
     // Not a Tollbit redirect
     if (!response.headers["x-tollbit-redirect"]) {
-      return { shouldRedirect: false };
+      return { action: "none" };
     }
 
     const redirectUrl = new URL(response.headers["location"] || targetUrl);
 
     // Add to protected sites if not already known
-    if (!this.protectedSites.has(redirectUrl.origin)) {
-      this.protectedSites.add(redirectUrl.origin);
-      if (this.config.debug) {
-        console.log(`Added new site to protection list: ${redirectUrl.origin}`);
-      }
-    }
+    this.registerSite(redirectUrl);
+    return { action: "redirect", isTollbitSite: true, to: redirectUrl };
+  }
 
-    const token = await this.generateToken(redirectUrl);
-    return { shouldRedirect: true, token, redirectUrl };
+  protected registerSite(url: URL): void {
+    const isSiteRegistered = this.protectedSites.has(url.origin);
+    if (!isSiteRegistered) {
+      this.protectedSites.add(url.origin);
+      this.config.debug &&
+        console.log(`Added new site to protection list: ${url.origin}`);
+    }
   }
 
   public async generateHeaders(
@@ -127,7 +175,6 @@ export class Tollbit {
     }
 
     const token = await this.generateToken(url);
-    console.log("generated token ", token);
     return {
       ...existingHeaders,
       "user-agent": this.config.userAgent,

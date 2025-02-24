@@ -1,4 +1,4 @@
-import { PlaywrightTollbit } from "@tollbit/playwright";
+import { TollbitPlaywrightPlugin } from "@tollbit/playwright";
 import { chromium } from "@playwright/test";
 import * as dotenv from "dotenv";
 
@@ -15,10 +15,14 @@ async function main() {
   }
 
   // Initialize Tollbit with your credentials and known protected sites
-  const tollbit = new PlaywrightTollbit({
-    apiKey: process.env.TOLLBIT_API_KEY || "your-api-key",
-    userAgent: process.env.TOLLBIT_USER_AGENT || "your-registered-user-agent",
-    tollbitHost: "edge.preproduction.tollbit.com",
+  const plugin = TollbitPlaywrightPlugin.fromConfig({
+    clientConfig: {
+      apiKey: process.env.TOLLBIT_API_KEY || "your-api-key",
+      userAgent: process.env.TOLLBIT_USER_AGENT || "your-registered-user-agent",
+      tollbitHost: "edge.preproduction.tollbit.com",
+      debug: true,
+      forceHeaders: true, // Always add Tollbit headers
+    },
     debug: true,
     forceHeaders: true, // Always add Tollbit headers
   });
@@ -31,7 +35,7 @@ async function main() {
   const page = await context.newPage();
 
   // Attach Tollbit to the context
-  await tollbit.attachToContext(context);
+  await plugin.attachToContext(context);
 
   console.log("Navigating to test page...");
   await page.goto(

@@ -1,5 +1,5 @@
 import { Stagehand } from "@browserbasehq/stagehand";
-import { StagehandTollbit } from "@tollbit/stagehand";
+import { TollbitStagehandPlugin } from "@tollbit/stagehand";
 import dotenv from "dotenv";
 
 // Load environment variables
@@ -16,12 +16,14 @@ async function main() {
   await stagehand.init();
 
   // Initialize Tollbit with your configuration
-  const tollbit = new StagehandTollbit({
-    tollbitHost: "edge.preproduction.tollbit.com",
-    apiKey: process.env.TOLLBIT_API_KEY!,
-    userAgent: "TestBot/1.0",
-    debug: true, // Enable debug logging
-    forceHeaders: true, // Use redirect-based behavior
+  const tollbit = TollbitStagehandPlugin.fromConfig({
+    clientConfig: {
+      tollbitHost: "edge.preproduction.tollbit.com",
+      apiKey: process.env.TOLLBIT_API_KEY!,
+      userAgent: "TestBot/1.0",
+      // debug: true,
+    },
+    // debug: true, // Enable debug logging
   });
 
   // Get the browser context
