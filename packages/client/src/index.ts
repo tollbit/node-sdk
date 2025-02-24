@@ -11,8 +11,6 @@ export interface ProxyClientConfig {
   debug?: boolean;
   /** Known protected sites */
   knownSites?: URL[];
-  /** Force headers to be added regardless of redirect status */
-  forceHeaders?: boolean;
 }
 
 export class TollbitError extends Error {
@@ -123,13 +121,6 @@ export class ProxyClient {
     response: TollbitResponse,
     targetUrl: string
   ): Promise<CheckResponseResult> {
-    // we make a request to a site, and get redirected to the tollbit subdomain
-
-    // we make a request to a site, and get redirected, but not a tollbit redirect
-
-    // we make a request to a tollbit site, but get a 402 for not having a token
-
-    console.log("checking response for %o %s", response, targetUrl);
     if (
       /^402$/.test(`${response.status}`) /*&&
       response.headers["x-tollbit-token-required"]*/
@@ -161,8 +152,9 @@ export class ProxyClient {
     const isSiteRegistered = this.protectedSites.has(url.origin);
     if (!isSiteRegistered) {
       this.protectedSites.add(url.origin);
-      this.config.debug &&
+      if (this.config.debug) {
         console.log(`Added new site to protection list: ${url.origin}`);
+      }
     }
   }
 
@@ -170,7 +162,7 @@ export class ProxyClient {
     url: URL,
     existingHeaders: Record<string, string> = {}
   ): Promise<Record<string, string>> {
-    if (!this.config.forceHeaders && !this.isProtectedUrl(url)) {
+    if (!this.isProtectedUrl(url)) {
       return existingHeaders;
     }
 

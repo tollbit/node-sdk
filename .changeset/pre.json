@@ -9,6 +9,7 @@
     "@tollbit/typescript-config": "0.0.0"
   },
   "changesets": [
+    "tame-snakes-glow",
     "whole-cities-study"
   ]
 }
