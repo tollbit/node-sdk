@@ -1,4 +1,4 @@
-# @tollbit/playwright
+# @tollbit/stagehand
 
 This package contains a plugin-style component to help playwright scripts access sites using the Tollbit proxy.
 
@@ -9,9 +9,9 @@ This package contains a plugin-style component to help playwright scripts access
 You can initialize the plugin using the following:
 
 ```typescript
-import { TollbitPlaywrightPlugin } from "@tollbit/playwright";
+import { TollbitStagehandPlugin } from "@tollbit/stagehand";
 
-const plugin = TollbitPlaywrightPlugin.fromConfig({
+const plugin = TollbitStagehandPlugin.fromConfig({
   clientConfig: {
     apiKey: process.env.TOLLBIT_API_KEY,
   },

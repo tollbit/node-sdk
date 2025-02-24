@@ -77,7 +77,7 @@ export class ProxyClient {
     return this.protectedSites.has(url.origin);
   }
 
-  protected async generateToken(targetUrl: URL): Promise<string> {
+  public async generateToken(targetUrl: URL): Promise<string> {
     if (!this.config.apiKey) {
       throw new TollbitError("API key is required", "KEY_INIT_FAILED");
     }
@@ -148,7 +148,7 @@ export class ProxyClient {
     return { action: "redirect", isTollbitSite: true, to: redirectUrl };
   }
 
-  protected registerSite(url: URL): void {
+  public registerSite(url: URL): void {
     const isSiteRegistered = this.protectedSites.has(url.origin);
     if (!isSiteRegistered) {
       this.protectedSites.add(url.origin);
