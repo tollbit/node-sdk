@@ -37,7 +37,6 @@ Tollbit creates a gateway for AI agents through a simple convention:
 
 We call this subdomain the "front door" - a dedicated entry point built specifically for AI agents, separate from human traffic.
 
-
 ```mermaid
 flowchart LR
     %% Define the AI agent client
@@ -68,18 +67,56 @@ flowchart LR
     B1 --- C1
     B2 --- C2
     B3 --- C3
-
 ```
 
 ## Tollbit Among the Ecosystem
 
-Tollbit complements emerging standards:
+Tollbit is intentionally built to improve, not compete with the existing ecosystem. Tollbit as the closest layer to the web service, while other frameworks specify how agents interact and communicate with that layer.
 
-- **Model Context Protocol (MCP)**: All Tollbit services are MCP-compatible, making them plug-and-play with Anthropic's models
+- **Model Context Protocol (MCP)**: All Tollbit services are MCP-compatible, making them plug-and-play with Anthropic's models. Tollbit is the "what", and MCP is the "how" for agents making requests on the web.
 - **OpenAPI**: Works alongside API specifications while adding agent-specific authentication and monetization
 - **AI Agent Frameworks**: Provides a consistent target for agent tools regardless of underlying architecture
 
-Tollbit is the "what", vs MCP is the "how"
+```mermaid
+flowchart LR
+    %% Define the AI agent client
+    A[AI Agent]
+
+    %% Define individual MCP servers
+    M1[MCP Server A]
+    M2[MCP Server B]
+    M3[MCP Server C]
+
+    %% Define the human user (simple)
+    H[Human User]
+
+    %% Define the Tollbit front doors
+    B1[tollbit.service-a.com]
+    B2[tollbit.service-b.com]
+    B3[tollbit.service-c.com]
+
+    %% Define the actual services
+    C1[service-a.com]
+    C2[service-b.com]
+    C3[service-c.com]
+
+    %% Connect AI agent to MCP servers
+    A -->|"MCP Protocol"| M3
+
+    %% Connect MCP servers to Tollbit front doors
+    A -->|"Tollbit Protocol"| B1
+    M2 -->|"MCP Protocol"| B2
+    M3 -->|"Tollbit Protocol"| B3
+
+    %% Connect human to just service-a
+    H -->|"Browser"| C1
+
+    %% Connect Tollbit front doors to actual services
+    B1 --- C1
+    B2 --- C2
+    B3 --- C3
+```
+
 
 ## For Service Providers
 
