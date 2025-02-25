@@ -104,8 +104,6 @@ flowchart LR
     A -->|"MCP Protocol"| M3
 
     %% Connect MCP servers to Tollbit front doors
-    M1 -->|"Tollbit Protocol"| B1
-    M2 -->|"Tollbit Protocol"| B2
     M3 -->|"Tollbit Protocol"| B3
 
     %% Connect human to just service-a
