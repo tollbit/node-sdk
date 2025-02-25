@@ -78,7 +78,8 @@ flowchart LR
     %% Connect AI agent to Tollbit front doors
     A -->|"Tollbit Protocol"| B1
     A -->|"Tollbit Protocol"| B2
-    A -->|"Tollbit Protocol"| B3```
+    A -->|"Tollbit Protocol"| B3
+```
 
 ## Tollbit Among the Ecosystem
 
