@@ -83,8 +83,6 @@ flowchart LR
     A[AI Agent]
 
     %% Define individual MCP servers
-    M1[MCP Server A]
-    M2[MCP Server B]
     M3[MCP Server C]
 
     %% Define the human user (simple)
@@ -101,11 +99,13 @@ flowchart LR
     C3[service-c.com]
 
     %% Connect AI agent to MCP servers
+    A -->|"Tollbit Protocol"| B1
+    A -->|"MCP Protocol"| B2
     A -->|"MCP Protocol"| M3
 
     %% Connect MCP servers to Tollbit front doors
-    A -->|"Tollbit Protocol"| B1
-    M2 -->|"MCP Protocol"| B2
+    M1 -->|"Tollbit Protocol"| B1
+    M2 -->|"Tollbit Protocol"| B2
     M3 -->|"Tollbit Protocol"| B3
 
     %% Connect human to just service-a
