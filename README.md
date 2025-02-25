@@ -42,43 +42,33 @@ We call this subdomain the "front door" - a dedicated entry point built specific
 flowchart LR
     %% Define the AI agent client
     A[AI Agent with<br>Tollbit Client]
-    style A fill:#222,color:#fff,stroke:#333,stroke-width:2px
 
-    %% Define the service blocks with Tollbit front doors attached
-    subgraph Service-A ["service-a.com"]
-        direction TB
-        C1[service-a.com]
-        B1[tollbit.service-a.com]
-        B1 --- C1
-    end
+    %% Define the Tollbit front doors
+    B1[tollbit.service-a.com]
+    B2[tollbit.service-b.com]
+    B3[tollbit.service-c.com]
 
-    subgraph Service-B ["service-b.com"]
-        direction TB
-        C2[service-b.com]
-        B2[tollbit.service-b.com]
-        B2 --- C2
-    end
+    %% Define the actual services
+    C1[service-a.com]
+    C2[service-b.com]
+    C3[service-c.com]
 
-    subgraph Service-C ["service-c.com"]
-        direction TB
-        C3[service-c.com]
-        B3[tollbit.service-c.com]
-        B3 --- C3
-    end
-
-    %% Style the boxes
-    style B1 fill:#333,color:#fff,stroke:#444,stroke-width:2px
-    style B2 fill:#333,color:#fff,stroke:#444,stroke-width:2px
-    style B3 fill:#333,color:#fff,stroke:#444,stroke-width:2px
-
-    style C1 fill:#444,color:#fff,stroke:#555,stroke-width:2px
-    style C2 fill:#444,color:#fff,stroke:#555,stroke-width:2px
-    style C3 fill:#444,color:#fff,stroke:#555,stroke-width:2px
+    %% Define the human user (simple)
+    H[Human User]
 
     %% Connect AI agent to Tollbit front doors
     A -->|"Tollbit Protocol"| B1
     A -->|"Tollbit Protocol"| B2
     A -->|"Tollbit Protocol"| B3
+
+    %% Connect human to just service-a
+    H -->|"Browser"| C1
+
+    %% Connect Tollbit front doors to actual services - no labels
+    B1 --- C1
+    B2 --- C2
+    B3 --- C3
+
 ```
 
 ## Tollbit Among the Ecosystem
