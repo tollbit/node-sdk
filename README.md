@@ -6,10 +6,10 @@
 
 <br>
 
-[![GitHub stars](https://img.shields.io/github/stars/tollbit/tollbit?style=social)](https://github.com/tollbit/tollbit/stargazers)
+[![GitHub stars](https://img.shields.io/github/stars/tollbit/tollbit-sdks?style=social)](https://github.com/tollbit/tollbit-sdks/stargazers)
 [![Discord](https://img.shields.io/discord/1234567890?style=flat&logo=discord&logoColor=white&label=discord&color=7289DA)](https://discord.gg/tollbit)
-[![Documentation](https://img.shields.io/badge/Documentation-📕-blue)](https://docs.tollbit.io)
-[![Twitter Follow](https://img.shields.io/twitter/follow/tollbit?style=social)](https://twitter.com/tollbit)
+[![Documentation](https://img.shields.io/badge/Documentation-📕-blue)](https://docs.tollbit.com)
+[![Twitter Follow](https://img.shields.io/twitter/follow/TollbitOffical?style=social)](https://twitter.com/tollbitofficial)
 
 ## Tollbit
 
@@ -71,7 +71,7 @@ flowchart LR
 
 ## Tollbit Among the Ecosystem
 
-Tollbit is intentionally built to improve, not compete with the existing ecosystem. Tollbit as the closest layer to the web service, while other frameworks specify how agents interact and communicate with that layer.
+Tollbit is intentionally built to improve, not compete with the existing ecosystem. Tollbit is the closest layer to the web service. Other frameworks specify how agents interact and communicate with that layer.
 
 - **Model Context Protocol (MCP)**: All Tollbit services are MCP-compatible, making them plug-and-play with Anthropic's models. Tollbit is the "what", and MCP is the "how" for agents making requests on the web.
 - **OpenAPI**: Works alongside API specifications while adding agent-specific authentication and monetization

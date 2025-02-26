@@ -23,7 +23,6 @@ async function main() {
       userAgent: "TestBot/1.0",
       // debug: true,
     },
-    // debug: true, // Enable debug logging
   });
 
   // Get the browser context

@@ -13,7 +13,8 @@ import { TollbitPlaywrightPlugin } from "@tollbit/playwright";
 
 const plugin = TollbitPlaywrightPlugin.fromConfig({
   clientConfig: {
-    apiKey: process.env.TOLLBIT_API_KEY,
+    apiKey: process.env.TOLLBIT_API_KEY!,
+    userAgent: "MyUserAgent/1.0",
   },
 });
 

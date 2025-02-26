@@ -21,10 +21,8 @@ async function main() {
       userAgent: process.env.TOLLBIT_USER_AGENT || "your-registered-user-agent",
       tollbitHost: "edge.preproduction.tollbit.com",
       debug: true,
-      forceHeaders: true, // Always add Tollbit headers
     },
     debug: true,
-    forceHeaders: true, // Always add Tollbit headers
   });
 
   // Launch browser and create context
