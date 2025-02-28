@@ -10,10 +10,12 @@
 
 <br>
 
-[![GitHub stars](https://img.shields.io/github/stars/tollbit/tollbit-sdks?style=social)](https://github.com/tollbit/tollbit-sdks/stargazers)
-[![Discord](https://img.shields.io/discord/1234567890?style=flat&logo=discord&logoColor=white&label=discord&color=7289DA)](https://discord.gg/tollbit)
-[![Documentation](https://img.shields.io/badge/Documentation-📕-blue)](https://docs.tollbit.com)
-[![Twitter Follow](https://img.shields.io/twitter/follow/TollbitOffical?style=social)](https://twitter.com/tollbitofficial)
+<p align="center">
+  <a href="https://github.com/tollbit/tollbit-sdks/stargazers"><img src="https://img.shields.io/github/stars/tollbit/tollbit-sdks?style=social" alt="GitHub stars"></a>
+  <a href="https://discord.gg/tollbit"><img src="https://img.shields.io/discord/1234567890?style=flat&logo=discord&logoColor=white&label=discord&color=7289DA" alt="Discord"></a>
+  <a href="https://docs.tollbit.com"><img src="https://img.shields.io/badge/Documentation-📕-blue" alt="Documentation"></a>
+  <a href="https://twitter.com/tollbitofficial"><img src="https://img.shields.io/twitter/follow/TollbitOffical?style=social" alt="Twitter Follow"></a>
+</p>
 
 ## Tollbit
 
