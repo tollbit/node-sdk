@@ -6,20 +6,20 @@
   <img alt="Tollbit" src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExaThrOTR0MGRwNzVubDhqYmJ0eHF4OXg3dXk2aXF4Nm1vdDY4NHZ1cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LQpFMg2ZY648ndTv0r/giphy.gif" width="700">
 </p>
 
-<h3 align="center">Front Door Access for AI Agents</h2>
+<h3 align="center">Tollbit: Front Door Access for AI Agents</h2>
 
 <br>
 
 <p align="center">
   <a href="https://github.com/tollbit/tollbit-sdks/stargazers"><img src="https://img.shields.io/github/stars/tollbit/tollbit-sdks?style=social" alt="GitHub stars"></a>
+  <a href="https://docs.tollbit.com"><img src="https://img.shields.io/badge/Documentation-📗-green" alt="Documentation"></a>
   <a href="https://discord.gg/tollbit"><img src="https://img.shields.io/discord/1234567890?style=flat&logo=discord&logoColor=white&label=discord&color=7289DA" alt="Discord"></a>
-  <a href="https://docs.tollbit.com"><img src="https://img.shields.io/badge/Documentation-📕-blue" alt="Documentation"></a>
   <a href="https://twitter.com/tollbitofficial"><img src="https://img.shields.io/twitter/follow/TollbitOffical?style=social" alt="Twitter Follow"></a>
 </p>
 
 ## Tollbit
 
-A lightweight access layer for any web application, specifically meant for AI agents. Direct, authorized, and reliable agent <-> service interactions for any web service on the internet.
+A managed entrypoint to any web app, specifically meant for AI agents. Direct, authorized, and reliable agent <-> service interactions for any web service on the internet.
 
 ## Why Tollbit Exists
 
@@ -62,9 +62,9 @@ flowchart LR
     H[Human User]
 
     %% Connect AI agent to Tollbit front doors
-    A -->|"Tollbit Protocol"| B1
-    A -->|"Tollbit Protocol"| B2
-    A -->|"Tollbit Protocol"| B3
+    A -->|"HTTP"| B1
+    A -->|"HTTP"| B2
+    A -->|"HTTP"| B3
 
     %% Connect human to just service-a
     H -->|"Browser"| C1
@@ -105,12 +105,12 @@ flowchart LR
     C3[service-c.com]
 
     %% Connect AI agent to MCP servers
-    A -->|"Tollbit Protocol"| B1
+    A -->|"HTTP"| B1
     A -->|"MCP Protocol"| B2
     A -->|"MCP Protocol"| M3
 
     %% Connect MCP servers to Tollbit front doors
-    M3 -->|"Tollbit Protocol"| B3
+    M3 -->|"HTTP"| B3
 
     %% Connect human to just service-a
     H -->|"Browser"| C1
@@ -142,23 +142,45 @@ Tollbit gives your agents reliable access to services:
 
 ## Agent Builder Quickstart
 
-### Prerequisites
+Start with a sample [Stagehand](https://stagehand.dev) app.
+```bash
+npx create-browser-app
+```
 
-- Node.js >= 14.x (for service providers)
-- Python >= 3.8 (for AI developers)
-- A valid Tollbit token (sign up at [tollbit.io/register](https://tollbit.io/register))
+Install the Tollbit client with Stagehand Plugin
+```bash
+npm i @tollbit/stagehand
+```
 
-### For AI Developers
+Add this code to your stagehand app.
+```typescript
+import { TollbitStagehandPlugin } from "@tollbit/stagehand";
 
-```python
-# Install the Tollbit client
-pip install tollbit-client
+/*
+other code...
+*/
 
-# Connect to a Tollbit service
-from tollbit import Client
+// Initialize Tollbit with your configuration
+const tollbit = TollbitStagehandPlugin.fromConfig({
+  clientConfig: {
+    apiKey: process.env.TOLLBIT_API_KEY!,
+    userAgent: "TestBot/1.0",
+  },
+});
 
-client = Client(token="your_tollbit_token")
-result = client.access("acme.com/get_data", params={"query": "example"})
+/*
+other code...
+*/
+
+const context = stagehand.context;
+
+// Attach Tollbit to the browser context
+await tollbit.attachToContext(context);
+
+/*
+use stagehand as normal!
+*/
+
 ```
 
 ## Roadmap
