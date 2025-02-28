@@ -19,7 +19,7 @@
 
 ## Tollbit
 
-A managed entrypoint to any web app, specifically meant for AI agents. Direct, authorized, and reliable agent <-> service interactions for any web service on the internet.
+A managed entry point to any web app, specifically meant for AI agents. Direct, authorized, and reliable agent <-> service interactions for any web service on the internet.
 
 ## Why Tollbit Exists
 
@@ -183,10 +183,6 @@ use stagehand as normal!
 
 ```
 
-## Roadmap
-
-- [] docs
-
 ## FAQ
 
 ### Is Tollbit only for commercial services?
@@ -201,10 +197,8 @@ Yes. Tollbit is designed to work alongside your existing API or web interface wi
 ### How does Tollbit compare to web scraping?
 Unlike web scraping, Tollbit provides a stable, approved interface that won't break with UI changes and respects the service's terms.
 
-## Join the Community
-
 - [Discord](https://discord.gg/tollbit)
-- [GitHub](https://github.com/tollbit/tollbit)
+- [GitHub](https://github.com/tollbit)
 - [Documentation](https://docs.tollbit.io)
 
 ---
