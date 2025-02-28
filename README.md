@@ -3,7 +3,7 @@
 </p> -->
 
 <p align="center">
-  <img alt="Tollbit" src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExaThrOTR0MGRwNzVubDhqYmJ0eHF4OXg3dXk2aXF4Nm1vdDY4NHZ1cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LQpFMg2ZY648ndTv0r/giphy.gif">
+  <img alt="Tollbit" src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExaThrOTR0MGRwNzVubDhqYmJ0eHF4OXg3dXk2aXF4Nm1vdDY4NHZ1cCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LQpFMg2ZY648ndTv0r/giphy.gif" width="700">
 </p>
 
 <h3 align="center">Front Door Access for AI Agents</h2>
