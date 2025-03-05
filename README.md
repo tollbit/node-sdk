@@ -8,6 +8,8 @@
 
 <h3 align="center">Tollbit: Front Door Access for AI Agents</h2>
 
+<p align="center">Web automation, API access, and content access all through a standard entry point.</p>
+
 <br>
 
 <p align="center">
@@ -19,7 +21,7 @@
 
 ## Tollbit
 
-A managed entry point to any web app, specifically meant for AI agents. Direct, authorized, and reliable agent <-> service interactions for any web service on the internet.
+A managed entry point to any web app, specifically meant for AI agents. Direct, authorized, and reliable agent <-> service interactions for any web service on the internet. Built for web automation, API access, and content access.
 
 ## Why Tollbit Exists
 
@@ -77,9 +79,9 @@ flowchart LR
 
 ## Tollbit Among the Ecosystem
 
-Tollbit is intentionally built to improve, not compete with the existing ecosystem. Tollbit is the closest layer to the web service. Other frameworks specify how agents interact and communicate with that layer.
+Tollbit is built to improve the existing ecosystem. We accomplish this by motivating service providers to globally onboard through a Tollbit subdomain, then other projects like MCP or Arcade dictate *how* you access those services.
 
-- **Model Context Protocol (MCP)**: All Tollbit services are MCP-compatible, making them plug-and-play with Anthropic's models. Tollbit is the "what", and MCP is the "how" for agents making requests on the web.
+- **Model Context Protocol (MCP)**: All services with a Tollbit subdomain are MCP-compatible, making them plug-and-play with Anthropic's models.
 - **OpenAPI**: Works alongside API specifications while adding agent-specific authentication and monetization
 - **AI Agent Frameworks**: Provides a consistent target for agent tools regardless of underlying architecture
 
@@ -126,7 +128,7 @@ flowchart LR
 
 Tollbit lets you monetize AI agent access to your service without building custom infrastructure:
 
-- Implement once, work with any Tollbit-compatible agent
+- Implement once, work with any agent
 - Set different pricing tiers and usage limits
 - Separate human and bot traffic transparently
 - Prevent abuse through standardized authentication
