@@ -174,3 +174,127 @@ export class ProxyClient {
     };
   }
 }
+
+export interface ApiRequestOptions extends RequestInit {
+  /** Whether to automatically retry on 402 responses */
+  autoRetry?: boolean;
+  /** Maximum number of retries for 402 responses */
+  maxRetries?: number;
+}
+
+export class TollbitApiClient {
+  private readonly client: ProxyClient;
+
+  static create(config: ProxyClientConfig): TollbitApiClient {
+    return new TollbitApiClient(config);
+  }
+
+  private constructor(config: ProxyClientConfig) {
+    this.client = ProxyClient.create(config);
+  }
+
+  /**
+   * Makes a request to a Tollbit-protected endpoint
+   * @param url The URL to make the request to
+   * @param options Request options including headers, body, etc.
+   * @returns The response from the server
+   */
+  async request(url: string | URL, options: ApiRequestOptions = {}): Promise<Response> {
+    const targetUrl = typeof url === 'string' ? new URL(url) : url;
+    const { autoRetry = true, maxRetries = 3, ...fetchOptions } = options;
+
+    let retryCount = 0;
+
+    while (true) {
+      try {
+        // Generate headers with Tollbit authentication
+        const requestHeaders = await this.client.generateHeaders(
+          targetUrl,
+          options.headers as Record<string, string> || {}
+        );
+
+        // Make the request
+        const response = await fetch(targetUrl.toString(), {
+          ...fetchOptions,
+          headers: requestHeaders,
+        });
+
+        // Check if we need to handle a Tollbit response
+        const responseHeaders: Record<string, string> = {};
+        response.headers.forEach((value, key) => {
+          responseHeaders[key] = value;
+        });
+
+        const { action, isTollbitSite } = await this.client.checkResponse(
+          {
+            status: response.status,
+            headers: responseHeaders,
+          },
+          targetUrl.toString()
+        );
+
+        if (!isTollbitSite) {
+          return response;
+        }
+
+        // Handle token required or redirect cases
+        if (action === "token_required" || action === "redirect") {
+          if (!autoRetry || retryCount >= maxRetries) {
+            throw new TollbitError(
+              "Max retries exceeded for Tollbit authentication",
+              "MAX_RETRIES_EXCEEDED"
+            );
+          }
+          retryCount++;
+          continue;
+        }
+
+        return response;
+      } catch (error) {
+        if (error instanceof TollbitError) {
+          throw error;
+        }
+        throw new TollbitError(
+          `Request failed: ${error.message}`,
+          "REQUEST_FAILED"
+        );
+      }
+    }
+  }
+
+  /**
+   * Convenience method for GET requests
+   */
+  async get(url: string | URL, options: ApiRequestOptions = {}): Promise<Response> {
+    return this.request(url, { ...options, method: 'GET' });
+  }
+
+  /**
+   * Convenience method for POST requests
+   */
+  async post(url: string | URL, body?: any, options: ApiRequestOptions = {}): Promise<Response> {
+    return this.request(url, {
+      ...options,
+      method: 'POST',
+      body: body ? JSON.stringify(body) : undefined,
+    });
+  }
+
+  /**
+   * Convenience method for PUT requests
+   */
+  async put(url: string | URL, body?: any, options: ApiRequestOptions = {}): Promise<Response> {
+    return this.request(url, {
+      ...options,
+      method: 'PUT',
+      body: body ? JSON.stringify(body) : undefined,
+    });
+  }
+
+  /**
+   * Convenience method for DELETE requests
+   */
+  async delete(url: string | URL, options: ApiRequestOptions = {}): Promise<Response> {
+    return this.request(url, { ...options, method: 'DELETE' });
+  }
+}
