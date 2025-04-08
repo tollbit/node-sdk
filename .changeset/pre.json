@@ -9,7 +9,10 @@
     "@tollbit/typescript-config": "0.0.0"
   },
   "changesets": [
+    "new-heads-tease",
     "tame-snakes-glow",
-    "whole-cities-study"
+    "ten-worms-cross",
+    "whole-cities-study",
+    "wicked-onions-cover"
   ]
 }

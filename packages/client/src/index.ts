@@ -258,10 +258,11 @@ export class TollbitApiClient {
         if (error instanceof TollbitError) {
           throw error;
         }
-        throw new TollbitError(
-          `Request failed: ${error.message}`,
-          "REQUEST_FAILED"
-        );
+        if (error instanceof Error) {
+          throw new TollbitError(`Request failed: ${error}`, "REQUEST_FAILED");
+        }
+
+        throw new TollbitError(`Request failed`, "REQUEST_FAILED");
       }
     }
   }
@@ -281,6 +282,7 @@ export class TollbitApiClient {
    */
   async post(
     url: string | URL,
+    /* eslint-disable  @typescript-eslint/no-explicit-any */
     body?: any,
     options: ApiRequestOptions = {}
   ): Promise<Response> {
@@ -296,6 +298,7 @@ export class TollbitApiClient {
    */
   async put(
     url: string | URL,
+    /* eslint-disable  @typescript-eslint/no-explicit-any */
     body?: any,
     options: ApiRequestOptions = {}
   ): Promise<Response> {
