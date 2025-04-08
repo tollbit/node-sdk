@@ -84,14 +84,15 @@ export class ProxyClient {
 
     try {
       const resp = await fetch(
-        `https://${
-          this.config.tollbitHost || "edge.tollbit.com"
-        }/.tollbit/auth/token`,
+        `${
+          this.config.tollbitHost || "api.tollbit.com"
+        }/identity/v1/tokens/mcp`,
         {
+          headers: {
+            TollbitKey: `Bearer ${this.config.apiKey}`,
+          },
           body: JSON.stringify({
-            apiKey: this.config.apiKey,
-            userAgent: this.config.userAgent,
-            site: targetUrl.host,
+            target: targetUrl.host,
           }),
           method: "POST",
         }
@@ -199,8 +200,11 @@ export class TollbitApiClient {
    * @param options Request options including headers, body, etc.
    * @returns The response from the server
    */
-  async request(url: string | URL, options: ApiRequestOptions = {}): Promise<Response> {
-    const targetUrl = typeof url === 'string' ? new URL(url) : url;
+  async request(
+    url: string | URL,
+    options: ApiRequestOptions = {}
+  ): Promise<Response> {
+    const targetUrl = typeof url === "string" ? new URL(url) : url;
     const { autoRetry = true, maxRetries = 3, ...fetchOptions } = options;
 
     let retryCount = 0;
@@ -210,7 +214,7 @@ export class TollbitApiClient {
         // Generate headers with Tollbit authentication
         const requestHeaders = await this.client.generateHeaders(
           targetUrl,
-          options.headers as Record<string, string> || {}
+          (options.headers as Record<string, string>) || {}
         );
 
         // Make the request
@@ -265,17 +269,24 @@ export class TollbitApiClient {
   /**
    * Convenience method for GET requests
    */
-  async get(url: string | URL, options: ApiRequestOptions = {}): Promise<Response> {
-    return this.request(url, { ...options, method: 'GET' });
+  async get(
+    url: string | URL,
+    options: ApiRequestOptions = {}
+  ): Promise<Response> {
+    return this.request(url, { ...options, method: "GET" });
   }
 
   /**
    * Convenience method for POST requests
    */
-  async post(url: string | URL, body?: any, options: ApiRequestOptions = {}): Promise<Response> {
+  async post(
+    url: string | URL,
+    body?: any,
+    options: ApiRequestOptions = {}
+  ): Promise<Response> {
     return this.request(url, {
       ...options,
-      method: 'POST',
+      method: "POST",
       body: body ? JSON.stringify(body) : undefined,
     });
   }
@@ -283,10 +294,14 @@ export class TollbitApiClient {
   /**
    * Convenience method for PUT requests
    */
-  async put(url: string | URL, body?: any, options: ApiRequestOptions = {}): Promise<Response> {
+  async put(
+    url: string | URL,
+    body?: any,
+    options: ApiRequestOptions = {}
+  ): Promise<Response> {
     return this.request(url, {
       ...options,
-      method: 'PUT',
+      method: "PUT",
       body: body ? JSON.stringify(body) : undefined,
     });
   }
@@ -294,7 +309,10 @@ export class TollbitApiClient {
   /**
    * Convenience method for DELETE requests
    */
-  async delete(url: string | URL, options: ApiRequestOptions = {}): Promise<Response> {
-    return this.request(url, { ...options, method: 'DELETE' });
+  async delete(
+    url: string | URL,
+    options: ApiRequestOptions = {}
+  ): Promise<Response> {
+    return this.request(url, { ...options, method: "DELETE" });
   }
 }
