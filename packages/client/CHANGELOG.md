@@ -1,5 +1,16 @@
 # @tollbit/client
 
+## 1.0.0-alpha.3
+
+### Minor Changes
+
+- 691f1be: Fix some build errors, silent updates
+
+### Patch Changes
+
+- 1f727e6: Update docs + expose some functions on the proxy client
+- 60b1d88: update token generation endpoint
+
 ## 1.0.0-alpha.2
 
 ### Patch Changes
